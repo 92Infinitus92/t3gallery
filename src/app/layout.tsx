@@ -1,11 +1,15 @@
 import "~/styles/globals.css";
 import "@uploadthing/react/styles.css";
 
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
+
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 
 import Link from "next/link";
 import TopNav from "./_components/topnav";
+import { ourFileRouter } from "./api/uploadthing/core";
+import { extractRouterConfig } from "uploadthing/server";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -27,6 +31,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`font-sans ${inter.variable} flex flex-col gap-4`}>
+          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
           <TopNav />
           {children}
         </body>
